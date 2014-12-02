@@ -4,10 +4,9 @@ import AccesoADatos.ClearViewDAO;
 
 public class MainController {
 	public boolean conectarBD() {
-		ClearViewDAO.getInstance();
-
-		System.out.println(ClearViewDAO.getInstance().connResult);
+		//Verificar si se puede realizar la conexión con la BD
 		if (!ClearViewDAO.getInstance().canConnect) {
+			//Crear Base de datos.
 			ClearViewDAO.getInstance().crearBase();
 			System.out.println(ClearViewDAO.getInstance().connResult);
 		}

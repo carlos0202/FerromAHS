@@ -16,6 +16,8 @@ public class Main {
 			System.in.read();
 			if (result) {
 				// Mostrar menu principal.
+				System.out.println("Bienvenido!");
+				System.in.read();
 			} else {
 				System.out.println("\n\nNo se puede continuar sin BD. xD.");
 
