@@ -22,6 +22,8 @@ class BaseDeDatos{
 		try {
 			conn = DriverManager.getConnection(URL);
 			System.out.println("\n* Conexion exitosa con la base de datos " +  nombreDB);
+		} catch(Exception ex){
+			System.out.println("\nError al conectar con la base de datos");
 		}
 		finally {}
 	}
