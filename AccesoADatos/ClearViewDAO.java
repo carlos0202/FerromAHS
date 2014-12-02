@@ -14,11 +14,7 @@ public class ClearViewDAO {
 	private String URL;
 	public String connResult;
 	public boolean canConnect;
-
-	private ClearViewDAO(String _nombreDB) {
-		nombreDB = _nombreDB;
-		instanciate();
-	}
+	private static final String driver = "org.apache.derby.jdbc.EmbeddedDriver";
 
 	private ClearViewDAO() {
 		nombreDB = "ClearViewDB";
@@ -27,6 +23,7 @@ public class ClearViewDAO {
 
 	private void instanciate() {
 		try {
+			Class.forName(driver).newInstance();
 			URL = String.format("jdbc:derby:%1$s;create=false",
 					new Object[] { nombreDB });
 			conn = DriverManager.getConnection(URL);
@@ -39,12 +36,9 @@ public class ClearViewDAO {
 		}
 	}
 
-	public static ClearViewDAO getInstance(String nombreDB) {
+	public static ClearViewDAO getInstance() {
 		if (_instance == null) {
-			if (nombreDB == null) {
-				_instance = new ClearViewDAO();
-			}
-			_instance = new ClearViewDAO(nombreDB);
+			_instance = new ClearViewDAO();
 		}
 
 		return _instance;
@@ -52,24 +46,26 @@ public class ClearViewDAO {
 
 	public void crearBase() {
 		System.out.println("Creando la Base de Datos, por favor Espere.");
-		conn = null;
+		this.conn = null;
 		try {
 			String cURL = String.format("jdbc:derby:%1$s;create=true",
 					new Object[] { nombreDB });
-			conn = DriverManager.getConnection(cURL);
+			this.conn = DriverManager.getConnection(cURL);
 			System.out
 					.println("\n* Driver jdbc:derby cargado para la base de datos "
 							+ nombreDB);
-			stm = conn.createStatement();
+			this.stm = conn.createStatement();
 
-			stm.execute("CREATE TABLE Credenciales"
+			this.stm.execute("CREATE TABLE Credenciales"
 					+ "( numCed BIGINT NOT NULL PRIMARY KEY,"
 					+ "  primerNombre VARCHAR(20) NOT NULL, "
 					+ "  primerApellido VARCHAR(20) NOT NULL, "
 					+ "  pena INTEGER NOT NULL)");
 
-			conn.close();
-
+			this.conn.close();
+			canConnect = true;
+			connResult = "\n* Conexion exitosa con la base de datos "
+					+ nombreDB;
 			System.out
 					.println("\n* Creacion exitosa de base datos " + nombreDB);
 		} catch (Exception ex) {
