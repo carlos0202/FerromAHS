@@ -4,14 +4,14 @@ import AccesoADatos.ClearViewDAO;
 
 public class MainController {
 	public boolean conectarBD() {
-		ClearViewDAO.getInstance(null);
+		ClearViewDAO.getInstance();
 
-		System.out.println(ClearViewDAO.getInstance(null).connResult);
-		if (!ClearViewDAO.getInstance(null).canConnect) {
-			ClearViewDAO.getInstance(null).crearBase();
-			System.out.println(ClearViewDAO.getInstance(null).connResult);
+		System.out.println(ClearViewDAO.getInstance().connResult);
+		if (!ClearViewDAO.getInstance().canConnect) {
+			ClearViewDAO.getInstance().crearBase();
+			System.out.println(ClearViewDAO.getInstance().connResult);
 		}
 
-		return ClearViewDAO.getInstance(null).canConnect;
+		return ClearViewDAO.getInstance().canConnect;
 	}
 }
