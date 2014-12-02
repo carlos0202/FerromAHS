@@ -18,9 +18,10 @@ public class Main {
 				// Mostrar menu principal.
 				System.out.println("Bienvenido!");
 				System.in.read();
+				System.exit(0);
 			} else {
 				System.out.println("\n\nNo se puede continuar sin BD. xD.");
-
+				System.exit(1);
 			}
 		} catch (Exception ex) {
 

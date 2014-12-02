@@ -1,9 +1,11 @@
 package AccesoADatos;
 
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
+import Utils.SqlRunner;
 
 public class ClearViewDAO {
 	private Connection conn;
@@ -51,16 +53,8 @@ public class ClearViewDAO {
 			String cURL = String.format("jdbc:derby:%1$s;create=true",
 					new Object[] { nombreDB });
 			this.conn = DriverManager.getConnection(cURL);
-			System.out
-					.println("\n* Driver jdbc:derby cargado para la base de datos "
-							+ nombreDB);
-			this.stm = conn.createStatement();
-
-			this.stm.execute("CREATE TABLE Credenciales"
-					+ "( numCed BIGINT NOT NULL PRIMARY KEY,"
-					+ "  primerNombre VARCHAR(20) NOT NULL, "
-					+ "  primerApellido VARCHAR(20) NOT NULL, "
-					+ "  pena INTEGER NOT NULL)");
+			InputStream scriptInputStream = ClearViewDAO.class.getResourceAsStream("/Sql/createDB.sql");
+			SqlRunner.runScript(conn, scriptInputStream);
 
 			this.conn.close();
 			canConnect = true;
