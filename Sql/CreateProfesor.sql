@@ -1,0 +1,7 @@
+CREATE TABLE Profesor( 
+    ID INTEGER NOT NULL PRIMARY KEY,
+    Nombre VARCHAR(20) NOT NULL, 
+    Apellido VARCHAR(20) NOT NULL,
+    Escuela VARCHAR(20) NOT NULL
+);
+

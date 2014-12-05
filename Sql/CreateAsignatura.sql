@@ -1,0 +1,6 @@
+CREATE TABLE Asignatura( 
+    Id INTEGER NOT NULL PRIMARY KEY,
+    Nombre VARCHAR(20) NOT NULL, 
+    cantCreditos INTEGER NOT NULL
+);
+
