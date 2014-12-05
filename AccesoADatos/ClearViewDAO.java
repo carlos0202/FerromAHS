@@ -7,7 +7,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-import modelos.Usuario;
+import modelos.*;
+import utils.Repositorio;
 import utils.SqlRunner;
 
 public class ClearViewDAO {
@@ -73,6 +74,7 @@ public class ClearViewDAO {
 		}
 	}
 	
+	@SuppressWarnings("null")
 	public boolean logUser(String user, String pass) throws Exception{
 		boolean valido = false;
 		String query = "Select * from Usuarios Where Usuario = ? and Pass = ?";
@@ -91,8 +93,30 @@ public class ClearViewDAO {
 						rs.getBoolean("Activo")
 					);
 		}
-		valido = (usr == null);
+		valido = (usr != null && usr.getUsuario().equals(user));
 		
+		if(valido && usr.getRol().equals("Profesor")){
+			query = "Select * from Profesores Where IdUsuario = ?";
+			pStm = conn.prepareStatement(query);
+			pStm.clearParameters();
+			pStm.setInt(1, usr.getId());
+			rs = pStm.executeQuery();
+			
+			while(rs.next()){
+				Profesor p = new Profesor(
+							rs.getInt("Id"),
+							rs.getString("Nombre"),
+							rs.getString("Apellido"),
+							rs.getString("Cedula"),
+							rs.getString("Escuela"),
+							usr.getId(),
+							usr
+						);
+				Repositorio.profesor = p; 
+			}
+			
+		}
+		Repositorio.logeado = usr;
 		
 		return valido;
 	}

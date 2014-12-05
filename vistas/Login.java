@@ -1,6 +1,8 @@
 package vistas;
 
 import java.util.Scanner;
+
+import utils.Repositorio;
 import controladores.LoginController;
 
 public class Login {
@@ -12,12 +14,12 @@ public class Login {
 		String usuario;
 		String pass;
 		int intentos = 0;
-		lector.useDelimiter("\n");
+		lector.useDelimiter("\r\n");
 
 		do {
 			try {
-				System.out.println("\n\n\n\n\n\n");
-				System.out.println("\n\n\n\n\n\n");
+				Repositorio.clrSrc();
+				System.out.println("\nIniciar Sesion");
 				System.out.println("-----------------------------------\n");
 				System.out
 						.println("\nIntroduzca sus datos de inicio de sesion");
