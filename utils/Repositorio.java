@@ -13,7 +13,7 @@ public final class Repositorio {
 	public static Usuario logeado;
 	public static Profesor profesor;
 
-	private Repositorio() {
+	static {
 		escuelas = new ArrayList<String>();
 		escuelas.add("Informatica");
 		escuelas.add("Matematica");
@@ -27,7 +27,7 @@ public final class Repositorio {
 		// "\r\n\r\n\r\n\r\n\r\n\r\n" +
 		// "\r\n\r\n\r\n\r\n\r\n\r\n" +
 		// "\r\n\r\n\r\n\r\n\r\n\r\n";
-		String r = "\r\n\b\r\n\b";
+		String r = "\r\n\r\n";
 		System.out.println(r);
 	}
 

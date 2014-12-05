@@ -1,11 +1,9 @@
 package accesoADatos;
 
 import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import modelos.*;
 import utils.Repositorio;
@@ -57,7 +55,8 @@ public class ClearViewDAO {
 			String cURL = String.format("jdbc:derby:%1$s;create=true",
 					new Object[] { nombreDB });
 			this.conn = DriverManager.getConnection(cURL);
-			InputStream scriptInputStream = ClearViewDAO.class.getResourceAsStream("/Sql/createDB.sql");
+			InputStream scriptInputStream = ClearViewDAO.class
+					.getResourceAsStream("/Sql/createDB.sql");
 			SqlRunner.runScript(conn, scriptInputStream);
 
 			this.conn.close();
@@ -73,54 +72,101 @@ public class ClearViewDAO {
 		finally {
 		}
 	}
-	
-	public boolean logUser(String user, String pass) throws Exception{
+
+	public boolean logUser(String user, String pass) throws Exception {
 		boolean valido = false;
 		String query = "Select * from Usuarios Where Usuario = ? and Pass = ?";
 		pStm = conn.prepareStatement(query);
 		pStm.setString(1, user);
 		pStm.setString(2, pass);
 		ResultSet rs = pStm.executeQuery();
-		
+
 		Usuario usr = null;
-		while(rs.next()){
-			usr = new Usuario(
-						rs.getInt("Id"),
-						rs.getString("Usuario"),
-						rs.getString("Pass"),
-						rs.getString("Rol"),
-						rs.getBoolean("Activo")
-					);
+		while (rs.next()) {
+			usr = new Usuario(rs.getInt("Id"), rs.getString("Usuario"),
+					rs.getString("Pass"), rs.getString("Rol"),
+					rs.getBoolean("Activo"));
 		}
 		valido = (usr != null && usr.getUsuario().equals(user));
-		
-		if(valido && usr.getRol().equals("Profesor")){
+
+		if (valido && usr.getRol().equals("Profesor")) {
 			query = "Select * from Profesores Where IdUsuario = ?";
 			pStm = conn.prepareStatement(query);
 			pStm.clearParameters();
 			pStm.setInt(1, usr.getId());
 			rs = pStm.executeQuery();
-			
-			while(rs.next()){
-				Profesor p = new Profesor(
-							rs.getInt("Id"),
-							rs.getString("Nombre"),
-							rs.getString("Apellido"),
-							rs.getString("Cedula"),
-							rs.getString("Escuela"),
-							usr.getId(),
-							usr
-						);
-				Repositorio.profesor = p; 
+
+			while (rs.next()) {
+				Profesor p = new Profesor(rs.getInt("Id"),
+						rs.getString("Nombre"), rs.getString("Apellido"),
+						rs.getString("Cedula"), rs.getString("Escuela"),
+						usr.getId(), usr);
+				Repositorio.profesor = p;
 			}
-			
+
 		}
 		Repositorio.logeado = usr;
-		
+
 		return valido;
 	}
-	
-	public boolean registrarProfesor(Profesor p){
+
+	public boolean registrarProfesor(Profesor p) throws Exception {
+		conn.setAutoCommit(false);
+		Savepoint s = conn.setSavepoint();
 		
+		try {
+			String query = "Insert into Usuarios(Usuario,Pass,Rol,Activo) "
+					+ "Values(?,?,?,?)";
+			pStm = conn.prepareStatement(query);
+			Usuario u = p.getUsuario();
+			pStm.setString(1, u.getUsuario());
+			pStm.setString(2, u.getPass());
+			pStm.setString(3, u.getRol());
+			pStm.setBoolean(4, u.isActivo());
+			pStm.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
+			ResultSet rs = pStm.getGeneratedKeys();
+			if (rs.next()) {
+				p.setIdUsuario(rs.getInt(1));
+			}
+
+			query = "Insert into Profesores(Nombre, Apellido, Cedula, Escuela, IdUsuario) "
+					+ " Values(?,?,?,?,?)";
+			pStm.clearParameters();
+			pStm.setString(1, p.getNombre());
+			pStm.setString(2, p.getApellido());
+			pStm.setString(3, p.getCedula());
+			pStm.setString(4, p.getEscuela());
+			pStm.setInt(5, p.getIdUsuario());
+			pStm.executeQuery();
+			conn.commit();
+
+			return true;
+		} catch (Exception ex) {
+			conn.rollback(s);
+			return false;
+		} finally {
+			conn.setAutoCommit(true);
+		}
+	}
+	
+	public List<Profesor> obtenerProfesores() throws Exception{
+		List<Profesor> profesores = new ArrayList<Profesor>();
+		String query = "Select * From Profesores";
+		pStm = conn.prepareStatement(query);
+		ResultSet rs = pStm.executeQuery();
+		
+		while(rs.next()){
+			profesores.add(new Profesor(
+					rs.getInt("Id"),
+					rs.getString("Nombre"),
+					rs.getString("Apellido"),
+					rs.getString("Cedula"),
+					rs.getString("Escuela"),
+					rs.getInt("IdUsuario"),
+					null
+					));
+		}
+		
+		return profesores;
 	}
 }

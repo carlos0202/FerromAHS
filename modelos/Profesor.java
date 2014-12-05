@@ -86,6 +86,10 @@ public class Profesor {
 		return idUsuario;
 	}
 	
+	public void setIdUsuario(int idUsuario){
+		this.idUsuario = idUsuario;
+	}
+	
 	public Seccion getSeccion(int id){
 		Seccion s = null;
 		
@@ -96,6 +100,13 @@ public class Profesor {
 		}
 		
 		return s;
+	}
+
+	@Override
+	public String toString() {
+		return id + "\t| " + nombre + "\t| "
+				+ apellido + "\t| " + cedula + "\t| " + escuela
+				+ "\n";
 	}
 
 }
