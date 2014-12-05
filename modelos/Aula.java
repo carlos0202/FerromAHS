@@ -5,11 +5,18 @@ public class Aula {
 	private String nombre;
 	private String ubicacion;
 	
-	public String getNombre() {
-		return nombre;
+	public Aula(){
+		
 	}
 	
 	public Aula(String nombre, String ubicacion) {
+		this.nombre = nombre;
+		this.ubicacion = ubicacion;
+	}
+
+	public Aula(int id, String nombre, String ubicacion) {
+		super();
+		this.id = id;
 		this.nombre = nombre;
 		this.ubicacion = ubicacion;
 	}
@@ -27,4 +34,7 @@ public class Aula {
 		return id;
 	}
 	
+	public String getNombre() {
+		return nombre;
+	}
 }

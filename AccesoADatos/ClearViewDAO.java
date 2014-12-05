@@ -74,7 +74,6 @@ public class ClearViewDAO {
 		}
 	}
 	
-	@SuppressWarnings("null")
 	public boolean logUser(String user, String pass) throws Exception{
 		boolean valido = false;
 		String query = "Select * from Usuarios Where Usuario = ? and Pass = ?";
@@ -119,5 +118,9 @@ public class ClearViewDAO {
 		Repositorio.logeado = usr;
 		
 		return valido;
+	}
+	
+	public boolean registrarProfesor(Profesor p){
+		
 	}
 }

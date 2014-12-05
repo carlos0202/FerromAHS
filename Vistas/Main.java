@@ -25,10 +25,7 @@ public class Main {
 
 				if (valido) {
 					// Mostrar menu de acuerdo al rol
-					System.out.println("\r\nBienvenido "
-							+ Repositorio.logeado.getUsuario());
-					System.out.println("Seleccione la opcion deseada:");
-					MostrarMenu();
+					mostrarMenu();
 				} else {
 					System.out
 							.println("Ha alcanzado el limite de intentos permitidos. \nLa aplicacion se cerrara...");
@@ -47,12 +44,16 @@ public class Main {
 		}
 	}
 
-	public static void MostrarMenu() throws Exception {
+	public static void mostrarMenu() throws Exception {
 		int opcion = 0;
 		// Administrador
 		if (Repositorio.logeado.getRol().equals("Administrador")) {
 			while (true) {
 				Repositorio.clrSrc();
+				System.out.println("\r\nBienvenido "
+						+ Repositorio.logeado.getUsuario());
+				System.out.println("Seleccione la opcion deseada:");
+				
 				System.out.println("\n1)Administrar Profesores");
 				System.out.println("\n2)Administrar Asignaturas");
 				System.out.println("\n3)Administrar Secciones");
@@ -63,28 +64,62 @@ public class Main {
 				opcion = lector.nextInt();
 
 				switch (opcion) {
-				case 1:
-					break;
-				case 2:
-					break;
-				case 3:
-					break;
-				case 4:
-					break;
-				case 5:
-					break;
-				case 6: {
-					System.out.println("\nPresione enter para continuar...");
-					System.in.read();
-					System.exit(0);
-				}
-					break;
+					case 1: {// Administrar Profesores
+						AdminProfesores.menuPrincipal();
+					} break;
+					case 2: // Administrar Asignaturas
+						break;
+					case 3: // Administrar Secciones
+						break;
+					case 4: // Administrar Aulas
+						break;
+					case 5: // Administrar Usuarios
+						break;
+					case 6: {
+						System.out.println("\nPresione enter para continuar...");
+						System.in.read();
+						System.exit(0);
+					} break;
+					
+					default: {
+						System.out.println("\nOpcion invalida...");
+					} break;
 				}
 			}
 		}
 		// Profesor
 		else {
+			while (true) {
+				Repositorio.clrSrc();
+				System.out.println("\r\nBienvenido "
+						+ Repositorio.logeado.getUsuario());
+				System.out.println("Seleccione la opcion deseada:");
+				
+				System.out.println("\n1)Inscribir Seccion");
+				System.out.println("\n2)Eliminar Seccion");
+				System.out.println("\n3)Ver Secciones");
+				System.out.println("\n4)Salir");
+				System.out.println("\n\nSeleccione una opcion[1-4]");
+				opcion = lector.nextInt();
 
+				switch (opcion) {
+					case 1:
+						break;
+					case 2: 
+						break;
+					case 3: 
+						break;
+					case 4: {
+						System.out.println("\nPresione enter para continuar...");
+						System.in.read();
+						System.exit(0);
+					} break;
+					
+					default: {
+						System.out.println("\nOpcion invalida...");
+					} break;
+				}
+			}
 		}
 	}
 

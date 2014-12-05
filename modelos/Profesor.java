@@ -13,6 +13,10 @@ public class Profesor {
 	private Usuario usuario;
 	private List<Seccion> secciones;
 	
+	public Profesor(){
+		this.secciones = new ArrayList<Seccion>();
+	}
+	
 	public Profesor(String nombre, String apellido, String cedula,
 			String escuela, int idUsuario) {
 		this.nombre = nombre;

@@ -12,6 +12,10 @@ public class Seccion {
 	private Profesor profesor;
 	private Aula aula;
 	
+	public Seccion(){
+		
+	}
+	
 	public Seccion(int idAsignatura, int idProfesor, int idAula, String dias,
 			String horas, boolean activa) {
 		this.idAsignatura = idAsignatura;

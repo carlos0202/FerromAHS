@@ -6,6 +6,10 @@ public class Asignatura {
 	private int cantCreditos;
 	private String escuela;
 	
+	public Asignatura(){
+		
+	}
+	
 	public Asignatura(String nombre, int cantCreditos, String escuela) {
 		this.nombre = nombre;
 		this.cantCreditos = cantCreditos;
