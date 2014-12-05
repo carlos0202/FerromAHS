@@ -1,57 +1,7 @@
-Fri Dec 05 08:48:05 BOT 2014 Thread[main,5,main] Cleanup action starting
-java.sql.SQLException: Database 'ClearViewDB' not found.
-	at org.apache.derby.impl.jdbc.SQLExceptionFactory40.getSQLException(Unknown Source)
-	at org.apache.derby.impl.jdbc.Util.newEmbedSQLException(Unknown Source)
-	at org.apache.derby.impl.jdbc.Util.newEmbedSQLException(Unknown Source)
-	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Unknown Source)
-	at org.apache.derby.impl.jdbc.EmbedConnection.newSQLException(Unknown Source)
-	at org.apache.derby.impl.jdbc.EmbedConnection.handleDBNotFound(Unknown Source)
-	at org.apache.derby.impl.jdbc.EmbedConnection.<init>(Unknown Source)
-	at org.apache.derby.impl.jdbc.EmbedConnection40.<init>(Unknown Source)
-	at org.apache.derby.jdbc.Driver40.getNewEmbedConnection(Unknown Source)
-	at org.apache.derby.jdbc.InternalDriver.connect(Unknown Source)
-	at org.apache.derby.jdbc.Driver20.connect(Unknown Source)
-	at org.apache.derby.jdbc.AutoloadedDriver.connect(Unknown Source)
-	at java.sql.DriverManager.getConnection(Unknown Source)
-	at java.sql.DriverManager.getConnection(Unknown Source)
-	at AccesoADatos.ClearViewDAO.instanciate(ClearViewDAO.java:31)
-	at AccesoADatos.ClearViewDAO.<init>(ClearViewDAO.java:23)
-	at AccesoADatos.ClearViewDAO.getInstance(ClearViewDAO.java:43)
-	at Controladores.MainController.conectarBD(MainController.java:8)
-	at Vistas.Main.main(Main.java:14)
-Caused by: java.sql.SQLException: Database 'ClearViewDB' not found.
-	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(Unknown Source)
-	at org.apache.derby.impl.jdbc.SQLExceptionFactory40.wrapArgsForTransportAcrossDRDA(Unknown Source)
-	... 19 more
-============= begin nested exception, level (1) ===========
-java.sql.SQLException: Database 'ClearViewDB' not found.
-	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(Unknown Source)
-	at org.apache.derby.impl.jdbc.SQLExceptionFactory40.wrapArgsForTransportAcrossDRDA(Unknown Source)
-	at org.apache.derby.impl.jdbc.SQLExceptionFactory40.getSQLException(Unknown Source)
-	at org.apache.derby.impl.jdbc.Util.newEmbedSQLException(Unknown Source)
-	at org.apache.derby.impl.jdbc.Util.newEmbedSQLException(Unknown Source)
-	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Unknown Source)
-	at org.apache.derby.impl.jdbc.EmbedConnection.newSQLException(Unknown Source)
-	at org.apache.derby.impl.jdbc.EmbedConnection.handleDBNotFound(Unknown Source)
-	at org.apache.derby.impl.jdbc.EmbedConnection.<init>(Unknown Source)
-	at org.apache.derby.impl.jdbc.EmbedConnection40.<init>(Unknown Source)
-	at org.apache.derby.jdbc.Driver40.getNewEmbedConnection(Unknown Source)
-	at org.apache.derby.jdbc.InternalDriver.connect(Unknown Source)
-	at org.apache.derby.jdbc.Driver20.connect(Unknown Source)
-	at org.apache.derby.jdbc.AutoloadedDriver.connect(Unknown Source)
-	at java.sql.DriverManager.getConnection(Unknown Source)
-	at java.sql.DriverManager.getConnection(Unknown Source)
-	at AccesoADatos.ClearViewDAO.instanciate(ClearViewDAO.java:31)
-	at AccesoADatos.ClearViewDAO.<init>(ClearViewDAO.java:23)
-	at AccesoADatos.ClearViewDAO.getInstance(ClearViewDAO.java:43)
-	at Controladores.MainController.conectarBD(MainController.java:8)
-	at Vistas.Main.main(Main.java:14)
-============= end nested exception, level (1) ===========
-Cleanup action completed
 ----------------------------------------------------------------
-Fri Dec 05 08:48:06 BOT 2014:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.1.3 - (1557168): instance a816c00e-014a-1a7e-3274-000002834df0 
-on database directory C:\Users\Cagonzalec\Documents\GitHub\FerromAHS\ClearViewDB with class loader sun.misc.Launcher$AppClassLoader@58644d46 
+Fri Dec 05 12:09:24 BOT 2014:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.1.3 - (1557168): instance a816c00e-014a-1b36-403b-000002935080 
+on database directory C:\Users\Cagonzalec\Documents\GitHub\FerromAHS\ClearViewDB with class loader sun.misc.Launcher$AppClassLoader@4aa298b7 
 Loaded from file:/C:/Users/Cagonzalec/Documents/GitHub/FerromAHS/lib/derby.jar
 java.vendor=Oracle Corporation
 java.runtime.version=1.8.0_25-b18
