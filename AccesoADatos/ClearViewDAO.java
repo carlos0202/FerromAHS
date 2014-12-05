@@ -117,13 +117,13 @@ public class ClearViewDAO {
 		try {
 			String query = "Insert into Usuarios(Usuario,Pass,Rol,Activo) "
 					+ "Values(?,?,?,?)";
-			pStm = conn.prepareStatement(query);
+			pStm = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 			Usuario u = p.getUsuario();
 			pStm.setString(1, u.getUsuario());
 			pStm.setString(2, u.getPass());
 			pStm.setString(3, u.getRol());
 			pStm.setBoolean(4, u.isActivo());
-			pStm.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
+			pStm.executeUpdate();
 			ResultSet rs = pStm.getGeneratedKeys();
 			if (rs.next()) {
 				p.setIdUsuario(rs.getInt(1));

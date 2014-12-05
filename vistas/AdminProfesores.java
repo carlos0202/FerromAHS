@@ -79,11 +79,15 @@ public class AdminProfesores {
 			System.out.print("\nPassword: ");
 			u.setPass(lector.next());
 			p.setUsuario(u);
-			c.registrarProfesor(p);
-			System.out.println("Profesor registrado satisfactoriamente...");
-			System.out.println("Presione <ENTER> para continuar...");
-			System.in.read();
-			return;
+			if (!c.registrarProfesor(p)) {
+				System.out
+						.println("\nError al registrar los datos. Intente luego.");
+			} else {
+				System.out.println("Profesor registrado satisfactoriamente...");
+				System.out.println("Presione <ENTER> para continuar...");
+				System.in.read();
+				return;
+			}
 		} catch (Exception ex) {
 			System.out
 					.println("\nError al registrar los datos. Intente luego.");
