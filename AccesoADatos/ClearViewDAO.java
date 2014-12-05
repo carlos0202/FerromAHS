@@ -1,11 +1,14 @@
-package AccesoADatos;
+package accesoADatos;
 
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.Statement;
-import Utils.SqlRunner;
+
+import modelos.Usuario;
+import utils.SqlRunner;
 
 public class ClearViewDAO {
 	private Connection conn;
@@ -68,5 +71,29 @@ public class ClearViewDAO {
 
 		finally {
 		}
+	}
+	
+	public boolean logUser(String user, String pass) throws Exception{
+		boolean valido = false;
+		String query = "Select * from Usuarios Where Usuario = ? and Pass = ?";
+		pStm = conn.prepareStatement(query);
+		pStm.setString(1, user);
+		pStm.setString(2, pass);
+		ResultSet rs = pStm.executeQuery();
+		
+		Usuario usr = null;
+		while(rs.next()){
+			usr = new Usuario(
+						rs.getInt("Id"),
+						rs.getString("Usuario"),
+						rs.getString("Pass"),
+						rs.getString("Rol"),
+						rs.getBoolean("Activo")
+					);
+		}
+		valido = (usr == null);
+		
+		
+		return valido;
 	}
 }

@@ -1,6 +1,6 @@
-package Controladores;
+package controladores;
 
-import AccesoADatos.ClearViewDAO;
+import accesoADatos.ClearViewDAO;
 
 public class MainController {
 	public boolean conectarBD() {
