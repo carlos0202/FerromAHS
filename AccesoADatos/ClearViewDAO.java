@@ -165,6 +165,11 @@ public class ClearViewDAO {
 			conn.setAutoCommit(true);
 		}
 	}
+	
+	public boolean registrarSeccion(Seccion s) throws Exception{
+		
+		return false;
+	}
 
 	public List<Asignatura> obtenerAsignaturas() throws Exception {
 		List<Asignatura> asignaturas = new ArrayList<Asignatura>();
@@ -195,6 +200,22 @@ public class ClearViewDAO {
 		}
 
 		return profesores;
+	}
+	
+	public List<Aula> obtenerAulas() throws Exception{
+		List<Aula> aulas = new ArrayList<Aula>();
+		String query = "SELECT * FROM Aulas";
+		pStm = conn.prepareStatement(query);
+		pStm.clearParameters();
+		ResultSet rs = pStm.executeQuery();
+		
+		while (rs.next()) {
+			aulas.add(new Aula(rs.getInt("Id"),
+					rs.getString("Nombre"),
+					rs.getString("Ubicacion")));
+		}
+		
+		return aulas;
 	}
 
 	public Asignatura buscarAsignatura(int id) throws Exception {

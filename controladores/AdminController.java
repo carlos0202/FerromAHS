@@ -14,6 +14,10 @@ public class AdminController {
 		return ClearViewDAO.getInstance().registrarAsignatura(a);
 	}
 	
+	public boolean registarSeccion(Seccion s) throws Exception{
+		return ClearViewDAO.getInstance().registrarSeccion(s);
+	}
+	
 	public List<Profesor> obtenerProfesores() throws Exception{
 		
 		return ClearViewDAO.getInstance().obtenerProfesores();
@@ -22,6 +26,11 @@ public class AdminController {
 	public List<Asignatura> obtenerAsignaturas() throws Exception{
 		
 		return ClearViewDAO.getInstance().obtenerAsignaturas();
+	}
+	
+	public List<Aula> obtenerAulas() throws Exception{
+		
+		return ClearViewDAO.getInstance().obtenerAulas();
 	}
 	
 	public Asignatura buscarAsignatura(int id) throws Exception{

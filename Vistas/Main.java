@@ -71,6 +71,7 @@ public class Main {
 						AdminAsignaturas.menuPrincipal();
 						break;
 					case 3: // Administrar Secciones
+						AdminSecciones.menuPrincipal();
 						break;
 					case 4: // Administrar Aulas
 						break;

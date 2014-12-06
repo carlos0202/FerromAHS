@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Scanner;
+
+import org.apache.commons.beanutils.BeanUtils;
+
 import modelos.Profesor;
 import modelos.Usuario;
 
@@ -31,9 +34,9 @@ public final class Repositorio {
 		System.out.println(r);
 	}
 
-	public static String valorDeLista(List<String> opciones, String mensajeSuperior,
-			Scanner lector) {
-		
+	public static String valorDeLista(List<String> opciones,
+			String mensajeSuperior, Scanner lector) {
+
 		int opcion = 0;
 		do {
 			System.out.println(mensajeSuperior);
@@ -45,12 +48,12 @@ public final class Repositorio {
 					+ "]: ");
 			opcion = lector.nextInt();
 		} while (opcion < 1 || opcion > opciones.size());
-		
+
 		return opciones.get(opcion);
 	}
-	
-	public static Object valorDeLista(Map<Integer, String> opciones, String mensajeSuperior,
-			Scanner lector) {
+
+	public static Object valorDeLista(Map<Integer, String> opciones,
+			String mensajeSuperior, Scanner lector) {
 		Object[] vals = opciones.values().toArray();
 		int opcion = 0;
 		do {
@@ -63,16 +66,38 @@ public final class Repositorio {
 					+ "]: ");
 			opcion = lector.nextInt();
 		} while (opcion < 1 || opcion > opciones.size());
-		
-		return getKeyByValue(opciones, (String)vals[opcion]);
+
+		return getKeyByValue(opciones, (String) vals[opcion]);
 	}
-	
+
 	public static <T, E> T getKeyByValue(Map<T, E> map, E value) {
-	    for (Entry<T, E> entry : map.entrySet()) {
-	        if (value.equals(entry.getValue())) {
-	            return entry.getKey();
-	        }
-	    }
-	    return null;
+		for (Entry<T, E> entry : map.entrySet()) {
+			if (value.equals(entry.getValue())) {
+				return entry.getKey();
+			}
+		}
+		return null;
+	}
+
+	public static <T> Object valorDeLista(List<T> opciones,
+			String mensajeSuperior, String textoProp) throws Exception {
+		Scanner lector = new Scanner(System.in);
+		int opcion = 0;
+		int i = 0;
+		do {
+			System.out.println(mensajeSuperior);
+
+			for (Object o : opciones) {
+				String prop = BeanUtils.getProperty(o, textoProp);
+				System.out.print("\n" + ++i + ")" + prop);
+			}
+			System.out.print("\n\nSeleccione una opcion [1-" + opciones.size()
+					+ "]: ");
+			opcion = lector.nextInt();
+		} while (opcion < 1 || opcion > opciones.size());
+		lector.close();
+		
+		return  BeanUtils.getProperty(opciones.get(opcion), "id");
+
 	}
 }
