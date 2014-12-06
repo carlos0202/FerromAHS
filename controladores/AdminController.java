@@ -22,6 +22,10 @@ public class AdminController {
 		return ClearViewDAO.getInstance().registrarAula(a);
 	}
 	
+	public boolean registrarSeccion(Seccion s) throws Exception{
+		return ClearViewDAO.getInstance().registrarSeccion(s);
+	}
+	
 	public List<Profesor> obtenerProfesores() throws Exception{
 		
 		return ClearViewDAO.getInstance().obtenerProfesores();

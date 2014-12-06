@@ -80,8 +80,7 @@ public final class Repositorio {
 	}
 
 	public static <T> Object valorDeLista(List<T> opciones,
-			String mensajeSuperior, String textoProp) throws Exception {
-		Scanner lector = new Scanner(System.in);
+			String mensajeSuperior, String textoProp, Scanner lector) throws Exception {
 		int opcion = 0;
 		int i = 0;
 		do {
@@ -95,7 +94,6 @@ public final class Repositorio {
 					+ "]: ");
 			opcion = lector.nextInt();
 		} while (opcion < 1 || opcion > opciones.size());
-		lector.close();
 		
 		return  BeanUtils.getProperty(opciones.get(opcion), "id");
 

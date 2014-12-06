@@ -182,8 +182,22 @@ public class ClearViewDAO {
 	}
 	
 	public boolean registrarSeccion(Seccion s) throws Exception{
-		
-		return false;
+		String query = "INSERT INTO Secciones(IdAsignatura,IdProfesor,IdAula,Dias,Horas,Activa) "
+				+ "VALUES(?,?,?,?,?,?)";
+		try {
+			pStm.clearParameters();
+			pStm = conn.prepareStatement(query);
+			pStm.setInt(1, s.getIdAsignatura());
+			pStm.setInt(2, s.getIdProfesor());
+			pStm.setInt(3, s.getIdAula());
+			pStm.setString(4, s.getDias());
+			pStm.setString(4, s.getHoras());
+			pStm.setBoolean(5, true);
+			pStm.executeUpdate();
+			return true;
+		} catch (Exception ex) {
+			return false;
+		}
 	}
 
 	public List<Asignatura> obtenerAsignaturas() throws Exception {
