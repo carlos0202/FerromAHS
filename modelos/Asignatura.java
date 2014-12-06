@@ -51,4 +51,10 @@ public class Asignatura {
 		return id;
 	}
 	
+	@Override
+	public String toString() {
+		return id + "\t| " + nombre + "\t| "
+				+ cantCreditos  + "\t| " + escuela
+				+ "\n";
+	}
 }

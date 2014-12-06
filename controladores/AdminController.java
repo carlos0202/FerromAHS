@@ -10,9 +10,23 @@ public class AdminController {
 		return ClearViewDAO.getInstance().registrarProfesor(p);
 	}
 	
+	public boolean registrarAsignatura(Asignatura a) throws Exception{
+		return ClearViewDAO.getInstance().registrarAsignatura(a);
+	}
+	
 	public List<Profesor> obtenerProfesores() throws Exception{
 		
 		return ClearViewDAO.getInstance().obtenerProfesores();
+	}
+	
+	public List<Asignatura> obtenerAsignaturas() throws Exception{
+		
+		return ClearViewDAO.getInstance().obtenerAsignaturas();
+	}
+	
+	public Asignatura buscarAsignatura(int id) throws Exception{
+		
+		return ClearViewDAO.getInstance().buscarAsignatura(id);
 	}
 	
 	public Profesor buscarProfesor(int id) throws Exception{
@@ -25,8 +39,18 @@ public class AdminController {
 		return ClearViewDAO.getInstance().actualizarProfesor(p);
 	}
 	
+	public boolean actualizarAsignatura(Asignatura a) throws Exception{
+		
+		return ClearViewDAO.getInstance().actualizarAsignatura(a);
+	}
+	
 	public boolean eliminarProfesor(Profesor p) throws Exception{
 		
 		return ClearViewDAO.getInstance().eliminarProfesor(p);
+	}
+	
+	public boolean eliminarAsignatura(Asignatura a) throws Exception{
+		
+		return ClearViewDAO.getInstance().eliminarAsignatura(a);
 	}
 }

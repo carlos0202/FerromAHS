@@ -109,14 +109,31 @@ public class ClearViewDAO {
 		return valido;
 	}
 
+	public boolean registrarAsignatura(Asignatura a) throws Exception {
+		String query = "INSERT INTO Asignaturas(Nombre,CantCreditos,Escuela) "
+				+ "VALUES(?,?,?)";
+		try {
+			pStm.clearParameters();
+			pStm = conn.prepareStatement(query);
+			pStm.setString(1, a.getNombre());
+			pStm.setInt(2, a.getCantCreditos());
+			pStm.setString(3, a.getEscuela());
+			pStm.executeUpdate();
+			return true;
+		} catch (Exception ex) {
+			return false;
+		}
+	}
+
 	public boolean registrarProfesor(Profesor p) throws Exception {
 		conn.setAutoCommit(false);
 		Savepoint s = conn.setSavepoint();
-		
+
 		try {
 			String query = "Insert into Usuarios(Usuario,Pass,Rol,Activo) "
 					+ "Values(?,?,?,?)";
-			pStm = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+			pStm = conn
+					.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 			Usuario u = p.getUsuario();
 			pStm.setString(1, u.getUsuario());
 			pStm.setString(2, u.getPass());
@@ -148,65 +165,101 @@ public class ClearViewDAO {
 			conn.setAutoCommit(true);
 		}
 	}
-	
-	public List<Profesor> obtenerProfesores() throws Exception{
+
+	public List<Asignatura> obtenerAsignaturas() throws Exception {
+		List<Asignatura> asignaturas = new ArrayList<Asignatura>();
+		String query = "SELECT * FROM Asignaturas";
+		pStm = conn.prepareStatement(query);
+		ResultSet rs = pStm.executeQuery();
+
+		while (rs.next()) {
+			asignaturas.add(new Asignatura(rs.getInt("Id"), rs
+					.getString("Nombre"), rs.getInt("CantCreditos"), rs
+					.getString("Escuela")));
+		}
+
+		return asignaturas;
+	}
+
+	public List<Profesor> obtenerProfesores() throws Exception {
 		List<Profesor> profesores = new ArrayList<Profesor>();
 		String query = "Select * From Profesores";
 		pStm = conn.prepareStatement(query);
 		ResultSet rs = pStm.executeQuery();
-		
-		while(rs.next()){
-			profesores.add(new Profesor(
-					rs.getInt("Id"),
-					rs.getString("Nombre"),
-					rs.getString("Apellido"),
-					rs.getString("Cedula"),
-					rs.getString("Escuela"),
-					rs.getInt("IdUsuario"),
-					null
-					));
+
+		while (rs.next()) {
+			profesores.add(new Profesor(rs.getInt("Id"),
+					rs.getString("Nombre"), rs.getString("Apellido"), rs
+							.getString("Cedula"), rs.getString("Escuela"), rs
+							.getInt("IdUsuario"), null));
 		}
-		
+
 		return profesores;
 	}
-	
-	public Profesor boscarProfesor(int id) throws Exception{
-		Profesor p = null;
-		String query = "Select p.*, u.Usuario, u.Pass, u.Activo, u.Rol From Profesores p inner join Usuarios u" +
-		            " on p.idUsuario = u.Id Where p.Id = ?";
+
+	public Asignatura buscarAsignatura(int id) throws Exception {
+		Asignatura a = null;
+		String query = "SELECT * FROM Asignaturas Where Id = ?";
 		pStm = conn.prepareStatement(query);
 		pStm.clearParameters();
 		pStm.setInt(1, id);
 		ResultSet rs = pStm.executeQuery();
-		
-		while(rs.next()){
-			p = new Profesor(
-					rs.getInt("Id"),
-					rs.getString("Nombre"),
-					rs.getString("Apellido"),
-					rs.getString("Cedula"),
-					rs.getString("Escuela"),
-					rs.getInt("IdUsuario"),
-					new Usuario(
-							rs.getInt("IdUsuario"),
-							rs.getString("Usuario"),
-							rs.getString("Pass"),
-							rs.getString("Rol"),
-							rs.getBoolean("Activo")
-							)
-					);
+
+		while (rs.next()) {
+			a = new Asignatura(rs.getInt("Id"), rs.getString("Nombre"),
+					rs.getInt("CantCreditos"), rs.getString("Escuela"));
 		}
-		
+
+		return a;
+	}
+
+	public Profesor boscarProfesor(int id) throws Exception {
+		Profesor p = null;
+		String query = "Select p.*, u.Usuario, u.Pass, u.Activo, u.Rol From Profesores p inner join Usuarios u"
+				+ " on p.idUsuario = u.Id Where p.Id = ?";
+		pStm = conn.prepareStatement(query);
+		pStm.clearParameters();
+		pStm.setInt(1, id);
+		ResultSet rs = pStm.executeQuery();
+
+		while (rs.next()) {
+			p = new Profesor(rs.getInt("Id"), rs.getString("Nombre"),
+					rs.getString("Apellido"), rs.getString("Cedula"),
+					rs.getString("Escuela"), rs.getInt("IdUsuario"),
+					new Usuario(rs.getInt("IdUsuario"),
+							rs.getString("Usuario"), rs.getString("Pass"), rs
+									.getString("Rol"), rs.getBoolean("Activo")));
+		}
+
 		return p;
 	}
-	
-	public boolean actualizarProfesor(Profesor p) throws Exception{
-		String query = "UPDATE Profesores SET Nombre = ?, Apellido = ?, " +
-				"Cedula = ?, Escuela = ? Where Id = ?";
+
+	public boolean actualizarAsignatura(Asignatura a) throws Exception {
+		String query = "UPDATE Asignaturas SET Nombre = ?, CantCreditos = ?, "
+				+ "Escuela = ? WHERE Id = ?";
+
+		try {
+			pStm.clearParameters();
+			pStm = conn.prepareStatement(query);
+			pStm.setString(1, a.getNombre());
+			pStm.setInt(2, a.getCantCreditos());
+			pStm.setString(3, a.getEscuela());
+			pStm.setInt(4, a.getId());
+			pStm.executeUpdate();
+
+			return true;
+		} catch (Exception ex) {
+			return false;
+		}
+	}
+
+	public boolean actualizarProfesor(Profesor p) throws Exception {
+		String query = "UPDATE Profesores SET Nombre = ?, Apellido = ?, "
+				+ "Cedula = ?, Escuela = ? Where Id = ?";
 		conn.setAutoCommit(false);
 		Savepoint s = conn.setSavepoint();
-		
-		try{
+
+		try {
 			pStm.clearParameters();
 			pStm = conn.prepareStatement(query);
 			pStm.setString(1, p.getNombre());
@@ -215,54 +268,68 @@ public class ClearViewDAO {
 			pStm.setString(4, p.getEscuela());
 			pStm.setInt(5, p.getId());
 			pStm.executeUpdate();
-			
-			query = "UPDATE Usuarios SET Usuario = ?, Pass = ?, " +
-					"Activo = ? WHERE Id = ?";
+
+			query = "UPDATE Usuarios SET Usuario = ?, Pass = ?, "
+					+ "Activo = ? WHERE Id = ?";
 			pStm.clearParameters();
 			pStm = conn.prepareStatement(query);
 			Usuario u = p.getUsuario();
-			
+
 			pStm.setString(1, u.getUsuario());
 			pStm.setString(2, u.getPass());
 			pStm.setBoolean(3, u.isActivo());
 			pStm.setInt(4, u.getId());
 			pStm.executeUpdate();
 			conn.commit();
-			
+
 			return true;
-		} catch(Exception ex){
+		} catch (Exception ex) {
 			conn.rollback(s);
 			return false;
-		} finally{
+		} finally {
 			conn.setAutoCommit(true);
 		}
 	}
-	
-	public boolean eliminarProfesor(Profesor p) throws Exception{
+
+	public boolean eliminarAsignatura(Asignatura a) throws Exception {
+		String query = "DELETE FROM Asignaturas WHERE Id = ?";
+		try{
+			pStm.clearParameters();
+			pStm = conn.prepareStatement(query);
+			pStm.setInt(1, a.getId());
+			pStm.executeUpdate();
+			
+			return true;
+		} catch(Exception ex){
+			return false;
+		}
+	}
+
+	public boolean eliminarProfesor(Profesor p) throws Exception {
 		String query = "DELETE FROM Profesores Where Id = ?";
 		conn.setAutoCommit(false);
 		Savepoint s = conn.setSavepoint();
-		
-		try{
+
+		try {
 			pStm.clearParameters();
 			pStm = conn.prepareStatement(query);
 			pStm.setInt(1, p.getId());
 			pStm.executeUpdate();
-			
+
 			query = "DELETE FROM Usuarios WHERE Id = ?";
 			pStm.clearParameters();
 			pStm = conn.prepareStatement(query);
-		
+
 			pStm.setInt(1, p.getUsuario().getId());
 			pStm.executeUpdate();
 			conn.commit();
-			
+
 			return true;
-		} catch(Exception ex){
+		} catch (Exception ex) {
 			conn.rollback(s);
 			return false;
-		} finally{
+		} finally {
 			conn.setAutoCommit(true);
-		}		
+		}
 	}
 }
