@@ -68,22 +68,22 @@ public class AdminSecciones {
 
 			System.out.println("\nIntroduzca los datos de la seccion");
 			System.out.print("\nAula: ");
-			int aula = (int) Repositorio.valorDeLista(aulas,
+			Object aula =  Repositorio.valorDeLista(aulas,
 					"Seleccione el aula:\n", "nombre", lector);
-			s.setIdAula(aula);
+			s.setIdAula(Integer.parseInt((String)aula));
 			System.out.print("\nProfesor: ");
-			int prof = (int) Repositorio.valorDeLista(profesores,
-					"Seleccione el profesor:\n", "nombre", lector);
+			int prof = Integer.parseInt((String)Repositorio.valorDeLista(profesores,
+					"Seleccione el profesor:\n", "nombre", lector));
 			s.setIdProfesor(prof);
 			System.out.print("\nAsignatura: ");
-			int asig = (int) Repositorio.valorDeLista(asignaturas,
-					"Seleccione el asignatura:\n", "nombre", lector);
+			int asig = Integer.parseInt((String)Repositorio.valorDeLista(asignaturas,
+					"Seleccione el asignatura:\n", "nombre", lector));
 			s.setIdAsignatura(asig);
 			System.out
 					.print("\nDias de clase: (ej: 1,2,3 {lunes,martes,miercoles}");
 			s.setDias(lector.next());
 			System.out
-					.print("\nHors asignadas (6-22): (ej: 18-20,18-20,18-21) {l:6-8pm,m:6-8pm,mi:6-9pm} ");
+					.print("\nHors asignadas (6-22): (ej: 18-20,18-20,18-21) {l:6-8pm,m:6-8pm,mi:6-9pm} : ");
 			s.setHoras(lector.next());
 
 			if (!c.registrarSeccion(s)) {

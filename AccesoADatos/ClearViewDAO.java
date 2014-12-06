@@ -191,8 +191,8 @@ public class ClearViewDAO {
 			pStm.setInt(2, s.getIdProfesor());
 			pStm.setInt(3, s.getIdAula());
 			pStm.setString(4, s.getDias());
-			pStm.setString(4, s.getHoras());
-			pStm.setBoolean(5, true);
+			pStm.setString(5, s.getHoras());
+			pStm.setBoolean(6, true);
 			pStm.executeUpdate();
 			return true;
 		} catch (Exception ex) {
