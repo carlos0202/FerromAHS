@@ -1,7 +1,7 @@
 ----------------------------------------------------------------
-Sat Dec 06 00:03:29 BOT 2014:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.1.3 - (1557168): instance a816c00e-014a-1dc4-4355-00000625d8e0 
-on database directory D:\Documentos\GitHub\FerromAHS\ClearViewDB with class loader sun.misc.Launcher$AppClassLoader@271a2576 
+Sat Dec 06 00:16:38 BOT 2014:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.1.3 - (1557168): instance a816c00e-014a-1dd0-4cf1-0000061023d0 
+on database directory D:\Documentos\GitHub\FerromAHS\ClearViewDB with class loader sun.misc.Launcher$AppClassLoader@4806de4b 
 Loaded from file:/D:/Documentos/GitHub/FerromAHS/lib/derby.jar
 java.vendor=Oracle Corporation
 java.runtime.version=1.7.0_67-b01

@@ -237,4 +237,32 @@ public class ClearViewDAO {
 			conn.setAutoCommit(true);
 		}
 	}
+	
+	public boolean eliminarProfesor(Profesor p) throws Exception{
+		String query = "DELETE FROM Profesores Where Id = ?";
+		conn.setAutoCommit(false);
+		Savepoint s = conn.setSavepoint();
+		
+		try{
+			pStm.clearParameters();
+			pStm = conn.prepareStatement(query);
+			pStm.setInt(1, p.getId());
+			pStm.executeUpdate();
+			
+			query = "DELETE FROM Usuarios WHERE Id = ?";
+			pStm.clearParameters();
+			pStm = conn.prepareStatement(query);
+		
+			pStm.setInt(1, p.getUsuario().getId());
+			pStm.executeUpdate();
+			conn.commit();
+			
+			return true;
+		} catch(Exception ex){
+			conn.rollback(s);
+			return false;
+		} finally{
+			conn.setAutoCommit(true);
+		}		
+	}
 }

@@ -151,7 +151,40 @@ public class AdminProfesores {
 	}
 
 	public static void eliminarProfesor() {
+		lector = new Scanner(System.in);
+		lector.useDelimiter("\r\n");
+		try {
+			List<Profesor> profesores = c.obtenerProfesores();
+			System.out.println("\nProfesores registrados:");
+			System.out
+					.println("ID\t| Nombre\t| Apellido\t| Cedula\t| Escuela\n");
+			for (Profesor p : profesores) {
+				System.out.print(p);
+			}
+			System.out.println("\nSeleccione el profesor (ID):");
+			int id = lector.nextInt();
+			Profesor p = c.buscarProfesor(id);
+			if(p == null){
+				System.out.println("\nProfesor no encontrado...");
+				System.out.println("Presione <ENTER> para continuar...");
+				lector.next();
+				return;
+			}
 
+			boolean r = c.eliminarProfesor(p);
+			if(r){
+				System.out.println("\nProfesor eliminado correctamente.");
+			} else{
+				System.out
+				.println("\nError al eliminar los datos. Intente luego.");
+			}
+			System.out.println("Presione <ENTER> para continuar...");
+			lector.next();
+			return;
+		} catch (Exception ex) {
+			System.out
+					.println("\nError al eliminar los datos. Intente luego.");
+		}
 	}
 
 	public static void verProfesores() {
