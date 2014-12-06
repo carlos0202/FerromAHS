@@ -15,6 +15,8 @@ public class AdminProfesores {
 		lector.useDelimiter("\r\n");
 		int opcion = 0;
 		while (true) {
+			lector.reset();
+			lector.useDelimiter("\r\n");
 			Repositorio.clrSrc();
 			System.out.println("\r\nAdministracion de profesores");
 			System.out.println("Seleccione la opcion deseada:");
@@ -95,7 +97,39 @@ public class AdminProfesores {
 	}
 
 	public static void actualizarProfesor() {
+		try {
+			List<Profesor> profesores = c.obtenerProfesores();
+			System.out.println("\nProfesores registrados:");
+			System.out
+					.println("ID\t| Nombre\t| Apellido\t| Cedula\t| Escuela\n");
+			for (Profesor p : profesores) {
+				System.out.print(p);
+			}
+			System.out.println("\nSeleccione el profesor (ID):");
+			int id = lector.nextInt();
+			Profesor p = c.buscarProfesor(id);
+			System.out.println("\nIntroduzca los nuevos datos del profesor");
+			System.out.print("\nNombre: ");
+			p.setNombre(lector.next());
+			System.out.print("\nApellido: ");
+			p.setApellido(lector.next());
+			System.out.print("\nCedula: ");
+			p.setCedula(lector.next());
+			System.out.print("\nEscuela: ");
+			String escuela = Repositorio.valorDeLista(Repositorio.escuelas,
+					"\nSeleccione la escuela:", lector);
+			p.setEscuela(escuela);
 
+			System.out.println("\n\nDatos para el inicio de sesion:");
+			System.out.print("\nUsurio: ");
+			p.getUsuario().setUsuario(lector.next());
+			System.out.print("\nPassword: ");
+			p.getUsuario().setPass(lector.next());
+
+		} catch (Exception ex) {
+			System.out
+					.println("\nError al actualizar los datos. Intente luego.");
+		}
 	}
 
 	public static void eliminarProfesor() {

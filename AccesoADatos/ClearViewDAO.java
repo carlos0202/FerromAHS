@@ -12,7 +12,6 @@ import utils.SqlRunner;
 public class ClearViewDAO {
 	private Connection conn;
 	private PreparedStatement pStm;
-	private Statement stm;
 	private static ClearViewDAO _instance;
 	public String nombreDB;
 	private String URL;
@@ -131,13 +130,14 @@ public class ClearViewDAO {
 
 			query = "Insert into Profesores(Nombre, Apellido, Cedula, Escuela, IdUsuario) "
 					+ " Values(?,?,?,?,?)";
+			pStm = conn.prepareStatement(query);
 			pStm.clearParameters();
 			pStm.setString(1, p.getNombre());
 			pStm.setString(2, p.getApellido());
 			pStm.setString(3, p.getCedula());
 			pStm.setString(4, p.getEscuela());
 			pStm.setInt(5, p.getIdUsuario());
-			pStm.executeQuery();
+			pStm.executeUpdate();
 			conn.commit();
 
 			return true;
@@ -168,5 +168,35 @@ public class ClearViewDAO {
 		}
 		
 		return profesores;
+	}
+	
+	public Profesor boscarProfesor(int id) throws Exception{
+		Profesor p = null;
+		String query = "Select p.*, u.Usuario, u.Pass, u.Activo From Profesor p inner join Usuario u" +
+		            " on p.idUsuario = u.Id Where p.Id = ?";
+		pStm = conn.prepareStatement(query);
+		pStm.clearParameters();
+		pStm.setInt(1, id);
+		ResultSet rs = pStm.executeQuery();
+		
+		while(rs.next()){
+			p = new Profesor(
+					rs.getInt("Id"),
+					rs.getString("Nombre"),
+					rs.getString("Apellido"),
+					rs.getString("Cedula"),
+					rs.getString("Escuela"),
+					rs.getInt("IdUsuario"),
+					new Usuario(
+							rs.getInt("IdUsuario"),
+							rs.getString("Usuario"),
+							rs.getString("Pass"),
+							rs.getString("Rol"),
+							rs.getBoolean("Activo")
+							)
+					);
+		}
+		
+		return p;
 	}
 }
