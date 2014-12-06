@@ -1,5 +1,0 @@
-CREATE TABLE Aula( 
-    Id INTEGER NOT NULL PRIMARY KEY,
-    Ubicacion VARCHAR(20) NOT NULL
-);
-
