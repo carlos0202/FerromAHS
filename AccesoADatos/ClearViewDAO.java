@@ -124,6 +124,21 @@ public class ClearViewDAO {
 			return false;
 		}
 	}
+	
+	public boolean registrarAula(Aula a) throws Exception{
+		String query = "INSERT INTO Aulas(Nombre,Ubicacion) "
+				+ "VALUES(?,?)";
+		try {
+			pStm.clearParameters();
+			pStm = conn.prepareStatement(query);
+			pStm.setString(1, a.getNombre());
+			pStm.setString(2, a.getUbicacion());
+			pStm.executeUpdate();
+			return true;
+		} catch (Exception ex) {
+			return false;
+		}
+	}
 
 	public boolean registrarProfesor(Profesor p) throws Exception {
 		conn.setAutoCommit(false);
@@ -233,6 +248,22 @@ public class ClearViewDAO {
 
 		return a;
 	}
+	
+	public Aula buscarAula(int id) throws Exception{
+		Aula a = null;
+		String query = "SELECT * FROM Aulas Where Id = ?";
+		pStm = conn.prepareStatement(query);
+		pStm.clearParameters();
+		pStm.setInt(1, id);
+		ResultSet rs = pStm.executeQuery();
+
+		while (rs.next()) {
+			a = new Aula(rs.getInt("Id"), rs.getString("Nombre"),
+					rs.getString("Ubicacion"));
+		}
+
+		return a;
+	}
 
 	public Profesor boscarProfesor(int id) throws Exception {
 		Profesor p = null;
@@ -266,6 +297,24 @@ public class ClearViewDAO {
 			pStm.setInt(2, a.getCantCreditos());
 			pStm.setString(3, a.getEscuela());
 			pStm.setInt(4, a.getId());
+			pStm.executeUpdate();
+
+			return true;
+		} catch (Exception ex) {
+			return false;
+		}
+	}
+	
+	public boolean actualizarAula(Aula a) throws Exception{
+		String query = "UPDATE Aulas SET Nombre = ?, Ubicacion = ? "
+				+ "WHERE Id = ?";
+
+		try {
+			pStm.clearParameters();
+			pStm = conn.prepareStatement(query);
+			pStm.setString(1, a.getNombre());
+			pStm.setString(2, a.getUbicacion());
+			pStm.setInt(3, a.getId());
 			pStm.executeUpdate();
 
 			return true;
@@ -314,6 +363,20 @@ public class ClearViewDAO {
 
 	public boolean eliminarAsignatura(Asignatura a) throws Exception {
 		String query = "DELETE FROM Asignaturas WHERE Id = ?";
+		try{
+			pStm.clearParameters();
+			pStm = conn.prepareStatement(query);
+			pStm.setInt(1, a.getId());
+			pStm.executeUpdate();
+			
+			return true;
+		} catch(Exception ex){
+			return false;
+		}
+	}
+	
+	public boolean eliminarAula(Aula a) throws Exception{
+		String query = "DELETE FROM Aulas WHERE Id = ?";
 		try{
 			pStm.clearParameters();
 			pStm = conn.prepareStatement(query);

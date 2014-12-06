@@ -68,18 +68,6 @@ public class AdminAula {
 			a.setNombre(lector.next());
 			System.out.print("\nUbicacion: ");
 			a.setUbicacion(lector.next());
-			//System.out.print("\nCedula: ");
-			//p.setCedula(lector.next());
-			//System.out.print("\nEscuela: ");
-			//String escuela = Repositorio.valorDeLista(Repositorio.escuelas, "\nSeleccione la escuela:", lector);
-			//p.setEscuela(escuela);
-
-			System.out.println("\n\nDatos para el inicio de sesion:");
-			System.out.print("\nUsurio: ");
-			u.setUsuario(lector.next());
-			System.out.print("\nPassword: ");
-			u.setPass(lector.next());
-			a.setUsuario(u);
 			if (!c.registrarAula(a)) {
 				System.out.println("\nError al registrar los datos. Intente luego.");
 			} else {
@@ -97,7 +85,7 @@ public class AdminAula {
 		lector = new Scanner(System.in);
 		lector.useDelimiter("\r\n");
 		try {
-			List<Aula> aula = c.obtenerAula();
+			List<Aula> aula = c.obtenerAulas();
 			System.out.println("\nAulas registrados:");
 			System.out.println("ID\t| Nombre\t| Ubicacion\n|");
 			for (Aula a : aula) {
@@ -117,18 +105,7 @@ public class AdminAula {
 			a.setNombre(lector.next());
 			System.out.print("\nUbicacion: ");
 			a.setUbicacion(lector.next());
-			//System.out.print("\nCedula: ");
-			//p.setCedula(lector.next());
-			//System.out.print("\nEscuela: ");
-			//String escuela = Repositorio.valorDeLista(Repositorio.escuelas, "\nSeleccione la escuela:", lector);
-			//p.setEscuela(escuela);
-
-			System.out.println("\n\nDatos para el inicio de sesion:");
-			System.out.print("\nUsurio: ");
-			a.getUsuario().setUsuario(lector.next());
-			System.out.print("\nPassword: ");
-			a.getUsuario().setPass(lector.next());
-			boolean r = c.actualizarAula(p);
+			boolean r = c.actualizarAula(a);
 			
 			if(r){
 				System.out.println("\nDatos actualizados correctamente.");
@@ -147,7 +124,7 @@ public class AdminAula {
 		lector = new Scanner(System.in);
 		lector.useDelimiter("\r\n");
 		try {
-			List<Aula> aula = c.obtenerAula();
+			List<Aula> aula = c.obtenerAulas();
 			System.out.println("\nAulas registrados:");
 			System.out.println("ID\t| Nombre\t| Ubicacion\t|");
 			for (Aula a : aula) {
@@ -179,7 +156,7 @@ public class AdminAula {
 
 	public static void verAula() {
 		try {
-			List<Aula> aula = c.obtenerAula();
+			List<Aula> aula = c.obtenerAulas();
 			System.out.println("\nAulas registrados:");
 			System.out.println("ID\t| Nombre\t| Ubicacion\t|");
 			for (Aula a : aula) {

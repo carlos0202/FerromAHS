@@ -37,4 +37,10 @@ public class Aula {
 	public String getNombre() {
 		return nombre;
 	}
+	
+	@Override
+	public String toString() {
+		return id + "\t| " + nombre + "\t| "
+				+ ubicacion   + "\n";
+	}
 }
