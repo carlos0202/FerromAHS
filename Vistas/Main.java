@@ -29,7 +29,7 @@ public class Main {
 				} else {
 					System.out
 							.println("Ha alcanzado el limite de intentos permitidos. \nLa aplicacion se cerrara...");
-					System.in.read();
+					lector.next();
 					System.exit(0);
 				}
 			} else {
@@ -77,7 +77,7 @@ public class Main {
 						break;
 					case 6: {
 						System.out.println("\nPresione enter para continuar...");
-						System.in.read();
+						lector.next();
 						System.exit(0);
 					} break;
 					
@@ -111,7 +111,7 @@ public class Main {
 						break;
 					case 4: {
 						System.out.println("\nPresione enter para continuar...");
-						System.in.read();
+						lector.next();
 						System.exit(0);
 					} break;
 					

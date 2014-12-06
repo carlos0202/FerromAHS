@@ -12,10 +12,9 @@ public class AdminProfesores {
 	private static AdminController c = new AdminController();
 
 	public static void menuPrincipal() throws Exception {
-		lector.useDelimiter("\r\n");
 		int opcion = 0;
 		while (true) {
-			lector.reset();
+			lector = new Scanner(System.in);
 			lector.useDelimiter("\r\n");
 			Repositorio.clrSrc();
 			System.out.println("\r\nAdministracion de profesores");
@@ -44,10 +43,9 @@ public class AdminProfesores {
 				break;
 			case 5: {
 				System.out.println("\nPresione enter para continuar...");
-				System.in.read();
-				System.exit(0);
+				lector.next();
+				return;
 			}
-				break;
 
 			default: {
 				System.out.println("\nOpcion invalida...");
@@ -58,6 +56,8 @@ public class AdminProfesores {
 	}
 
 	public static void registrarProfesor() {
+		lector = new Scanner(System.in);
+		lector.useDelimiter("\r\n");
 		Profesor p = new Profesor();
 		Usuario u = new Usuario();
 		u.setRol("Profesor");
@@ -87,7 +87,7 @@ public class AdminProfesores {
 			} else {
 				System.out.println("Profesor registrado satisfactoriamente...");
 				System.out.println("Presione <ENTER> para continuar...");
-				System.in.read();
+				lector.next();
 				return;
 			}
 		} catch (Exception ex) {
@@ -97,6 +97,8 @@ public class AdminProfesores {
 	}
 
 	public static void actualizarProfesor() {
+		lector = new Scanner(System.in);
+		lector.useDelimiter("\r\n");
 		try {
 			List<Profesor> profesores = c.obtenerProfesores();
 			System.out.println("\nProfesores registrados:");
@@ -111,7 +113,7 @@ public class AdminProfesores {
 			if(p == null){
 				System.out.println("\nProfesor no encontrado...");
 				System.out.println("Presione <ENTER> para continuar...");
-				System.in.read();
+				lector.next();
 				return;
 			}
 			System.out.println("\nIntroduzca los nuevos datos del profesor");
@@ -140,7 +142,7 @@ public class AdminProfesores {
 				.println("\nError al actualizar los datos. Intente luego.");
 			}
 			System.out.println("Presione <ENTER> para continuar...");
-			System.in.read();
+			lector.next();
 			return;
 		} catch (Exception ex) {
 			System.out
@@ -162,7 +164,7 @@ public class AdminProfesores {
 				System.out.print(p);
 			}
 			System.out.println("\nPresione <ENTER> para continuar...");
-			System.in.read();
+			lector.next();
 		} catch (Exception ex) {
 
 		}

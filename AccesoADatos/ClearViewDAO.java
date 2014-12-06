@@ -172,7 +172,7 @@ public class ClearViewDAO {
 	
 	public Profesor boscarProfesor(int id) throws Exception{
 		Profesor p = null;
-		String query = "Select p.*, u.Usuario, u.Pass, u.Activo From Profesor p inner join Usuario u" +
+		String query = "Select p.*, u.Usuario, u.Pass, u.Activo, u.Rol From Profesores p inner join Usuarios u" +
 		            " on p.idUsuario = u.Id Where p.Id = ?";
 		pStm = conn.prepareStatement(query);
 		pStm.clearParameters();
@@ -200,12 +200,41 @@ public class ClearViewDAO {
 		return p;
 	}
 	
-	public boolean actualizarProfesor(Profesor p){
-		String query = "update Profesores set Nombre = ?, Apellido = ?, " +
+	public boolean actualizarProfesor(Profesor p) throws Exception{
+		String query = "UPDATE Profesores SET Nombre = ?, Apellido = ?, " +
 				"Cedula = ?, Escuela = ? Where Id = ?";
+		conn.setAutoCommit(false);
+		Savepoint s = conn.setSavepoint();
 		
-		
-		
-		return true;
+		try{
+			pStm.clearParameters();
+			pStm = conn.prepareStatement(query);
+			pStm.setString(1, p.getNombre());
+			pStm.setString(2, p.getApellido());
+			pStm.setString(3, p.getCedula());
+			pStm.setString(4, p.getEscuela());
+			pStm.setInt(5, p.getId());
+			pStm.executeUpdate();
+			
+			query = "UPDATE Usuarios SET Usuario = ?, Pass = ?, " +
+					"Activo = ? WHERE Id = ?";
+			pStm.clearParameters();
+			pStm = conn.prepareStatement(query);
+			Usuario u = p.getUsuario();
+			
+			pStm.setString(1, u.getUsuario());
+			pStm.setString(2, u.getPass());
+			pStm.setBoolean(3, u.isActivo());
+			pStm.setInt(4, u.getId());
+			pStm.executeUpdate();
+			conn.commit();
+			
+			return true;
+		} catch(Exception ex){
+			conn.rollback(s);
+			return false;
+		} finally{
+			conn.setAutoCommit(true);
+		}
 	}
 }
