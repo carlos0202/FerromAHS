@@ -7,14 +7,15 @@ import controladores.AdminController;
 import modelos.*;
 import utils.Repositorio;
 
-public class AdminAulas {
+public class AdminAula {
 	private static Scanner lector = new Scanner(System.in);
 	private static AdminController c = new AdminController();
 
 	public static void menuPrincipal() throws Exception {
-		lector.useDelimiter("\r\n");
 		int opcion = 0;
 		while (true) {
+			lector = new Scanner(System.in);
+			lector.useDelimiter("\r\n");
 			Repositorio.clrSrc();
 			System.out.println("\r\nAdministracion de Aulas");
 			System.out.println("Seleccione la opcion deseada:");
@@ -42,10 +43,9 @@ public class AdminAulas {
 				break;
 			case 5: {
 				System.out.println("\nPresione enter para continuar...");
-				System.in.read();
-				System.exit(0);
+				lector.next();
+				return;
 			}
-				break;
 
 			default: {
 				System.out.println("\nOpcion invalida...");
@@ -56,28 +56,36 @@ public class AdminAulas {
 	}
 
 	public static void registrarAula() {
+		lector = new Scanner(System.in);
+		lector.useDelimiter("\r\n");
 		Aula a = new Aula();
 		Usuario u = new Usuario();
 		u.setRol("Aula");
 		u.setActivo(true);
 		try {
-			System.out.println("\nIntroduzca los datos del Aula");
+			System.out.println("\nIntroduzca los datos del aula");
 			System.out.print("\nNombre: ");
 			a.setNombre(lector.next());
 			System.out.print("\nUbicacion: ");
 			a.setUbicacion(lector.next());
+			//System.out.print("\nCedula: ");
+			//p.setCedula(lector.next());
+			//System.out.print("\nEscuela: ");
+			//String escuela = Repositorio.valorDeLista(Repositorio.escuelas, "\nSeleccione la escuela:", lector);
+			//p.setEscuela(escuela);
 
 			System.out.println("\n\nDatos para el inicio de sesion:");
 			System.out.print("\nUsurio: ");
 			u.setUsuario(lector.next());
 			System.out.print("\nPassword: ");
 			u.setPass(lector.next());
-			if (!c.registrarAula()) {
+			a.setUsuario(u);
+			if (!c.registrarAula(a)) {
 				System.out.println("\nError al registrar los datos. Intente luego.");
 			} else {
-				System.out.println("Profesor registrado satisfactoriamente...");
+				System.out.println("Aula registrada satisfactoriamente...");
 				System.out.println("Presione <ENTER> para continuar...");
-				System.in.read();
+				lector.next();
 				return;
 			}
 		} catch (Exception ex) {
@@ -86,16 +94,16 @@ public class AdminAulas {
 	}
 
 	public static void actualizarAula() {
-lector = new Scanner(System.in);
+		lector = new Scanner(System.in);
 		lector.useDelimiter("\r\n");
 		try {
 			List<Aula> aula = c.obtenerAula();
-			System.out.println("\nAulas registradas:");
-			System.out.println("ID\t| Nombre\t| Creditos\t| Escuela\n");
-			for (Aula a : aulas) {
+			System.out.println("\nAulas registrados:");
+			System.out.println("ID\t| Nombre\t| Ubicacion\n|");
+			for (Aula a : aula) {
 				System.out.print(a);
 			}
-			System.out.println("\nSeleccione la aula (ID):");
+			System.out.println("\nSeleccione el aula (ID):");
 			int id = lector.nextInt();
 			Aula a = c.buscarAula(id);
 			if(a == null){
@@ -107,10 +115,20 @@ lector = new Scanner(System.in);
 			System.out.println("\nIntroduzca los nuevos datos del Aula");
 			System.out.print("\nNombre: ");
 			a.setNombre(lector.next());
-			System.out.print("\nUbicacion ");
-			a.setCantCreditos(lector.nextInt());
-			System.out.print("\nEscuela: ");
-			boolean r = c.actualizarAula(a);
+			System.out.print("\nUbicacion: ");
+			a.setUbicacion(lector.next());
+			//System.out.print("\nCedula: ");
+			//p.setCedula(lector.next());
+			//System.out.print("\nEscuela: ");
+			//String escuela = Repositorio.valorDeLista(Repositorio.escuelas, "\nSeleccione la escuela:", lector);
+			//p.setEscuela(escuela);
+
+			System.out.println("\n\nDatos para el inicio de sesion:");
+			System.out.print("\nUsurio: ");
+			a.getUsuario().setUsuario(lector.next());
+			System.out.print("\nPassword: ");
+			a.getUsuario().setPass(lector.next());
+			boolean r = c.actualizarAula(p);
 			
 			if(r){
 				System.out.println("\nDatos actualizados correctamente.");
@@ -126,20 +144,20 @@ lector = new Scanner(System.in);
 	}
 
 	public static void eliminarAula() {
-lector = new Scanner(System.in);
+		lector = new Scanner(System.in);
 		lector.useDelimiter("\r\n");
 		try {
 			List<Aula> aula = c.obtenerAula();
-			System.out.println("\nAsignaturas registradas:");
+			System.out.println("\nAulas registrados:");
 			System.out.println("ID\t| Nombre\t| Ubicacion\t|");
 			for (Aula a : aula) {
 				System.out.print(a);
 			}
-			System.out.println("\nSeleccione la aula (ID):");
+			System.out.println("\nSeleccione el Aula (ID):");
 			int id = lector.nextInt();
-			Asignatura a = c.buscarAula(id);
+			Aula a = c.buscarAula(id);
 			if(a == null){
-				System.out.println("\nAula no encontrada...");
+				System.out.println("\nAula no encontrado...");
 				System.out.println("Presione <ENTER> para continuar...");
 				lector.next();
 				return;
@@ -147,7 +165,7 @@ lector = new Scanner(System.in);
 
 			boolean r = c.eliminarAula(a);
 			if(r){
-				System.out.println("\nAsignatura eliminada correctamente.");
+				System.out.println("\nAula eliminada correctamente.");
 			} else{
 				System.out.println("\nError al eliminar los datos. Intente luego.");
 			}
@@ -161,14 +179,14 @@ lector = new Scanner(System.in);
 
 	public static void verAula() {
 		try {
-			List<Profesor> profesores = c.obtenerProfesores();
-			System.out.println("\nProfesores registrados:");
+			List<Aula> aula = c.obtenerAula();
+			System.out.println("\nAulas registrados:");
 			System.out.println("ID\t| Nombre\t| Ubicacion\t|");
 			for (Aula a : aula) {
 				System.out.print(a);
 			}
 			System.out.println("\nPresione <ENTER> para continuar...");
-			System.in.read();
+			lector.next();
 		} catch (Exception ex) {
 
 		}
