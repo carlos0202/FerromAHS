@@ -86,11 +86,77 @@ public class AdminAulas {
 	}
 
 	public static void actualizarAula() {
-
+lector = new Scanner(System.in);
+		lector.useDelimiter("\r\n");
+		try {
+			List<Aula> aula = c.obtenerAula();
+			System.out.println("\nAulas registradas:");
+			System.out.println("ID\t| Nombre\t| Creditos\t| Escuela\n");
+			for (Aula a : aulas) {
+				System.out.print(a);
+			}
+			System.out.println("\nSeleccione la aula (ID):");
+			int id = lector.nextInt();
+			Aula a = c.buscarAula(id);
+			if(a == null){
+				System.out.println("\nAula no encontrada...");
+				System.out.println("Presione <ENTER> para continuar...");
+				lector.next();
+				return;
+			}
+			System.out.println("\nIntroduzca los nuevos datos del Aula");
+			System.out.print("\nNombre: ");
+			a.setNombre(lector.next());
+			System.out.print("\nUbicacion ");
+			a.setCantCreditos(lector.nextInt());
+			System.out.print("\nEscuela: ");
+			boolean r = c.actualizarAula(a);
+			
+			if(r){
+				System.out.println("\nDatos actualizados correctamente.");
+			} else{
+				System.out.println("\nError al actualizar los datos. Intente luego.");
+			}
+			System.out.println("Presione <ENTER> para continuar...");
+			lector.next();
+			return;
+		} catch (Exception ex) {
+			System.out.println("\nError al actualizar los datos. Intente luego.");
+		}
 	}
 
 	public static void eliminarAula() {
+lector = new Scanner(System.in);
+		lector.useDelimiter("\r\n");
+		try {
+			List<Aula> aula = c.obtenerAula();
+			System.out.println("\nAsignaturas registradas:");
+			System.out.println("ID\t| Nombre\t| Ubicacion\t|");
+			for (Aula a : aula) {
+				System.out.print(a);
+			}
+			System.out.println("\nSeleccione la aula (ID):");
+			int id = lector.nextInt();
+			Asignatura a = c.buscarAula(id);
+			if(a == null){
+				System.out.println("\nAula no encontrada...");
+				System.out.println("Presione <ENTER> para continuar...");
+				lector.next();
+				return;
+			}
 
+			boolean r = c.eliminarAula(a);
+			if(r){
+				System.out.println("\nAsignatura eliminada correctamente.");
+			} else{
+				System.out.println("\nError al eliminar los datos. Intente luego.");
+			}
+			System.out.println("Presione <ENTER> para continuar...");
+			lector.next();
+			return;
+		} catch (Exception ex) {
+			System.out.println("\nError al eliminar los datos. Intente luego.");
+		}
 	}
 
 	public static void verAula() {
