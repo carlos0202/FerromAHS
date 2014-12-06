@@ -199,4 +199,13 @@ public class ClearViewDAO {
 		
 		return p;
 	}
+	
+	public boolean actualizarProfesor(Profesor p){
+		String query = "update Profesores set Nombre = ?, Apellido = ?, " +
+				"Cedula = ?, Escuela = ? Where Id = ?";
+		
+		
+		
+		return true;
+	}
 }

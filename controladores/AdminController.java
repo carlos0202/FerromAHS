@@ -15,6 +15,12 @@ public class AdminController {
 	}
 	
 	public Profesor buscarProfesor(int id) throws Exception{
+		
 		return ClearViewDAO.getInstance().boscarProfesor(id);
+	}
+	
+	public boolean actualizarProfesor(Profesor p) throws Exception{
+		
+		return ClearViewDAO.getInstance().actualizarProfesor(p);
 	}
 }

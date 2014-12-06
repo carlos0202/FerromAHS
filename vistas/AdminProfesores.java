@@ -108,6 +108,12 @@ public class AdminProfesores {
 			System.out.println("\nSeleccione el profesor (ID):");
 			int id = lector.nextInt();
 			Profesor p = c.buscarProfesor(id);
+			if(p == null){
+				System.out.println("\nProfesor no encontrado...");
+				System.out.println("Presione <ENTER> para continuar...");
+				System.in.read();
+				return;
+			}
 			System.out.println("\nIntroduzca los nuevos datos del profesor");
 			System.out.print("\nNombre: ");
 			p.setNombre(lector.next());
@@ -125,7 +131,17 @@ public class AdminProfesores {
 			p.getUsuario().setUsuario(lector.next());
 			System.out.print("\nPassword: ");
 			p.getUsuario().setPass(lector.next());
-
+			boolean r = c.actualizarProfesor(p);
+			
+			if(r){
+				System.out.println("\nDatos actualizados correctamente.");
+			} else{
+				System.out
+				.println("\nError al actualizar los datos. Intente luego.");
+			}
+			System.out.println("Presione <ENTER> para continuar...");
+			System.in.read();
+			return;
 		} catch (Exception ex) {
 			System.out
 					.println("\nError al actualizar los datos. Intente luego.");
