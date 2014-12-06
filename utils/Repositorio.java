@@ -80,24 +80,21 @@ public final class Repositorio {
 	}
 
 	public static <T> Object valorDeLista(List<T> opciones,
-			String mensajeSuperior, String textoProp) throws Exception {
-		Scanner lector = new Scanner(System.in);
+			String mensajeSuperior, String textoProp, Scanner lector) throws Exception {
 		int opcion = 0;
-		int i = 0;
 		do {
 			System.out.println(mensajeSuperior);
 
-			for (Object o : opciones) {
-				String prop = BeanUtils.getProperty(o, textoProp);
+			for(int i = 0; i < opciones.size(); i++){
+				String prop = BeanUtils.getProperty(opciones.get(i), textoProp);
 				System.out.print("\n" + ++i + ")" + prop);
 			}
 			System.out.print("\n\nSeleccione una opcion [1-" + opciones.size()
 					+ "]: ");
 			opcion = lector.nextInt();
 		} while (opcion < 1 || opcion > opciones.size());
-		lector.close();
 		
-		return  BeanUtils.getProperty(opciones.get(opcion), "id");
+		return  BeanUtils.getProperty(opciones.get(opcion-1), "id");
 
 	}
 }
