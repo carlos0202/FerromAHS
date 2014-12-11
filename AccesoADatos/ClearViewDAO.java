@@ -231,6 +231,31 @@ public class ClearViewDAO {
 		return profesores;
 	}
 	
+	public List<Seccion> obtenerSecciones() throws Exception{
+		List<Seccion> secciones = new ArrayList<Seccion>();
+		String query = "SELECT * FROM Secciones";
+		pStm = conn.prepareStatement(query);
+		ResultSet rs = pStm.executeQuery();
+		while(rs.next()){
+			secciones.add(new Seccion(
+					rs.getInt("Id"),
+					rs.getInt("IdAsignatura"),
+					rs.getInt("IdProfesor"),
+					rs.getInt("IdAula"),
+					rs.getString("Dias"),
+					rs.getString("Horas"),
+				    rs.getBoolean("Activa")));
+		}
+		for(int i = 0; i < secciones.size(); i++){
+			Seccion s = secciones.get(i);
+			secciones.get(i).setProfesor(boscarProfesor(s.getIdProfesor()));
+			secciones.get(i).setAula(buscarAula(s.getIdAula()));
+			secciones.get(i).setAsignatura(buscarAsignatura(s.getIdAsignatura()));
+		}
+	
+		return secciones;
+	}
+	
 	public List<Aula> obtenerAulas() throws Exception{
 		List<Aula> aulas = new ArrayList<Aula>();
 		String query = "SELECT * FROM Aulas";

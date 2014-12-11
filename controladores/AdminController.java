@@ -41,6 +41,10 @@ public class AdminController {
 		return ClearViewDAO.getInstance().obtenerAulas();
 	}
 	
+	public List<Seccion> obtenerSecciones() throws Exception{
+		return ClearViewDAO.getInstance().obtenerSecciones();
+	}
+	
 	public Asignatura buscarAsignatura(int id) throws Exception{
 		
 		return ClearViewDAO.getInstance().buscarAsignatura(id);

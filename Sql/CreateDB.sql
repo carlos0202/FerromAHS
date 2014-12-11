@@ -26,9 +26,9 @@ CREATE TABLE Profesores(
 
 CREATE TABLE Asignaturas(
     Id INT NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1) CONSTRAINT Asignaturas_PK PRIMARY KEY, 
-    Nombre VARCHAR(30) NOT NULL UNIQUE,
+    Nombre VARCHAR(50) NOT NULL UNIQUE,
     CantCreditos INT NOT NULL,
-    Escuela VARCHAR(40) NOT NULL
+    Escuela VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE Secciones(
@@ -36,8 +36,8 @@ CREATE TABLE Secciones(
     IdAsignatura INT NOT NULL,
     IdProfesor INT NOT NULL,
     IdAula INT NOT NULL,
-    Dias VARCHAR(10) NOT NULL,
-    Horas VARCHAR(20) NOT NULL,
+    Dias VARCHAR(100) NOT NULL,
+    Horas VARCHAR(100) NOT NULL,
     Activa BOOLEAN NOT NULL,
     PRIMARY KEY (Id, IdAsignatura, IdProfesor),
     CONSTRAINT FK_Secciones_Profesores

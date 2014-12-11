@@ -2,6 +2,7 @@ package vistas;
 
 import java.util.List;
 import java.util.Scanner;
+
 import modelos.*;
 import utils.Repositorio;
 import controladores.AdminController;
@@ -41,7 +42,7 @@ public class AdminSecciones {
 				eliminarSeccion();
 				break;
 			case 4:
-				verSeccions();
+				verSecciones();
 				break;
 			case 5: {
 				System.out.println("\nPresione enter para continuar...");
@@ -61,6 +62,10 @@ public class AdminSecciones {
 		lector = new Scanner(System.in);
 		lector.useDelimiter("\r\n");
 		Seccion s = new Seccion();
+		String dias = "";
+		String horas = "";
+		int vecesXsemana = 0;
+		
 		try {
 			profesores = c.obtenerProfesores();
 			aulas = c.obtenerAulas();
@@ -79,12 +84,23 @@ public class AdminSecciones {
 			int asig = Integer.parseInt((String)Repositorio.valorDeLista(asignaturas,
 					"Seleccione el asignatura:\n", "nombre", lector));
 			s.setIdAsignatura(asig);
-			System.out
-					.print("\nDias de clase: (ej: 1,2,3 {lunes,martes,miercoles}");
-			s.setDias(lector.next());
-			System.out
-					.print("\nHors asignadas (6-22): (ej: 18-20,18-20,18-21) {l:6-8pm,m:6-8pm,mi:6-9pm} : ");
-			s.setHoras(lector.next());
+			System.out.print("\nIntroduzca la cantidad de encuentros por semana [1-7]:");
+			vecesXsemana = lector.nextInt();
+			for(int i = 0; i < vecesXsemana; i++){
+				dias += Repositorio.LeerDia(lector) + ",";
+				horas += Repositorio.LeerHora(lector, "inicio") ;
+				horas += "-" + Repositorio.LeerHora(lector, "fin")+ ","; 
+			}
+			dias = dias.substring(0, dias.length() - 1);
+			horas = horas.substring(0, horas.length() -1);
+			s.setHoras(horas);
+			s.setDias(dias);
+//			System.out
+//					.print("\nDias de clase: (ej: 1,2,3 {lunes,martes,miercoles}");
+//			s.setDias(lector.next());
+//			System.out
+//					.print("\nHors asignadas (6-22): (ej: 18-20,18-20,18-21) {l:6-8pm,m:6-8pm,mi:6-9pm} : ");
+//			s.setHoras(lector.next());
 
 			if (!c.registrarSeccion(s)) {
 				System.out
@@ -109,7 +125,19 @@ public class AdminSecciones {
 		
 	}
 
-	public static void verSeccions() {
-		
+	public static void verSecciones() {
+		try {
+			List<Seccion> secciones = c.obtenerSecciones();
+			System.out.println("\nSecciones registradas:");
+			System.out
+					.println("ID\t| Horas\t| Dias\t| Profesor\t| Asignatura\t Aula\n");
+			for (Seccion p : secciones) {
+				System.out.print(p);
+			}
+			System.out.println("\nPresione <ENTER> para continuar...");
+			lector.next();
+		} catch (Exception ex) {
+
+		}
 	}
 }

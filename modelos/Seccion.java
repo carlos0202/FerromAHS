@@ -112,5 +112,11 @@ public class Seccion {
 	public int getId() {
 		return id;
 	}
-	
+
+	@Override
+	public String toString() {
+		return id + "\t| " + horas + "\t| " + dias + "\t| "
+				+ profesor.getNombre() + "\t| " + asignatura.getNombre() + "\t| " + aula.getNombre()
+				+ "\n";
+	}
 }
