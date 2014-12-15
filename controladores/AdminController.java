@@ -60,6 +60,11 @@ public class AdminController {
 		return ClearViewDAO.getInstance().buscarAula(id);
 	}
 	
+	public Seccion buscarSeccion(int id) throws Exception{
+		
+		return ClearViewDAO.getInstance().buscarSeccion(id);
+	}
+	
 	public boolean actualizarProfesor(Profesor p) throws Exception{
 		
 		return ClearViewDAO.getInstance().actualizarProfesor(p);
@@ -80,6 +85,11 @@ public class AdminController {
 		return ClearViewDAO.getInstance().eliminarProfesor(p);
 	}
 	
+	public boolean actualizarSeccion(Seccion s) throws Exception{
+		
+		return ClearViewDAO.getInstance().actualizarSeccion(s);
+	}
+	
 	public boolean eliminarAsignatura(Asignatura a) throws Exception{
 		
 		return ClearViewDAO.getInstance().eliminarAsignatura(a);
@@ -88,5 +98,10 @@ public class AdminController {
 	public boolean eliminarAula(Aula a) throws Exception{
 		
 		return ClearViewDAO.getInstance().eliminarAula(a);
+	}
+	
+	public boolean eliminarSeccion(Seccion s) throws Exception{
+		
+		return ClearViewDAO.getInstance().eliminarSeccion(s);
 	}
 }

@@ -95,6 +95,7 @@ public final class Repositorio {
 			System.out.print("\n\nSeleccione una opcion [1-" + opciones.size()
 					+ "]: ");
 			opcion = lector.nextInt();
+			lector.nextLine();
 		} while (opcion < 1 || opcion > opciones.size());
 
 		return BeanUtils.getProperty(opciones.get(opcion - 1), "id");

@@ -324,6 +324,28 @@ public class ClearViewDAO {
 
 		return p;
 	}
+	
+	public Seccion buscarSeccion(int id) throws Exception{
+		Seccion s = null;
+		String query = "SELECT * FROM Secciones WHERE Id = ?";
+		pStm = conn.prepareStatement(query);
+		pStm.clearParameters();
+		pStm.setInt(1, id);
+		ResultSet rs = pStm.executeQuery();
+		
+		while(rs.next()){
+			s = new Seccion(
+					rs.getInt("Id"), rs.getInt("IdAsignatura"),
+					rs.getInt("IdProfesor"), rs.getInt("IdAula"),
+					rs.getString("Dias"), rs.getString("Horas"), 
+					rs.getBoolean("Activa"));
+		}
+		s.setProfesor(boscarProfesor(s.getIdProfesor()));
+		s.setAula(buscarAula(s.getIdAula()));
+		s.setAsignatura(buscarAsignatura(s.getIdAsignatura()));
+		
+		return s;
+	}
 
 	public boolean actualizarAsignatura(Asignatura a) throws Exception {
 		String query = "UPDATE Asignaturas SET Nombre = ?, CantCreditos = ?, "
@@ -357,6 +379,28 @@ public class ClearViewDAO {
 			pStm.executeUpdate();
 
 			return true;
+		} catch (Exception ex) {
+			return false;
+		}
+	}
+	
+	public boolean actualizarSeccion(Seccion s) throws Exception{
+		String query = "UPDATE Secciones SET IdAsignatura = ?, IdProfesor = ?, " +
+				"IdAula = ?, Dias = ?, Horas = ?, Activa = ? WHERE Id = ?";
+		
+		try {
+			pStm.clearParameters();
+			pStm = conn.prepareStatement(query);
+			pStm.setInt(1, s.getIdAsignatura());
+			pStm.setInt(2, s.getIdProfesor());
+			pStm.setInt(3, s.getIdAula());
+			pStm.setString(4, s.getDias());
+			pStm.setString(5, s.getHoras());
+			pStm.setBoolean(6, s.isActiva());
+			pStm.setInt(7, s.getId());
+			//pStm.executeUpdate();
+
+			return pStm.executeUpdate() == 1;
 		} catch (Exception ex) {
 			return false;
 		}
@@ -453,6 +497,20 @@ public class ClearViewDAO {
 			return false;
 		} finally {
 			conn.setAutoCommit(true);
+		}
+	}
+	
+	public boolean eliminarSeccion(Seccion s) throws Exception{
+		String query = "DELETE FROM Secciones WHERE Id = ?";
+		try{
+			pStm.clearParameters();
+			pStm = conn.prepareStatement(query);
+			pStm.setInt(1, s.getId());
+			pStm.executeUpdate();
+			
+			return true;
+		} catch(Exception ex){
+			return false;
 		}
 	}
 }

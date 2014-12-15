@@ -61,6 +61,7 @@ public class AdminSecciones {
 	public static void registrarSeccion() {
 		lector = new Scanner(System.in);
 		lector.useDelimiter("\r\n");
+		lector.nextLine();
 		Seccion s = new Seccion();
 		String dias = "";
 		String horas = "";
@@ -86,6 +87,7 @@ public class AdminSecciones {
 			s.setIdAsignatura(asig);
 			System.out.print("\nIntroduzca la cantidad de encuentros por semana [1-7]:");
 			vecesXsemana = lector.nextInt();
+			lector.nextLine();
 			for(int i = 0; i < vecesXsemana; i++){
 				dias += Repositorio.LeerDia(lector) + ",";
 				horas += Repositorio.LeerHora(lector, "inicio") ;
@@ -118,11 +120,106 @@ public class AdminSecciones {
 	}
 
 	public static void actualizarSeccion() {
+		lector = new Scanner(System.in);
+		lector.useDelimiter("\r\n");
+		lector.nextLine();
+		String dias = "";
+		String horas = "";
 		
+		int vecesXsemana = 0;
+		try {
+			List<Seccion> secciones = c.obtenerSecciones();
+			System.out.println("\nSecciones registradas:");
+			System.out
+					.println("ID\t| Horas\t| Dias\t| Profesor\t| Asignatura\t Aula\n");
+			for (Seccion p : secciones) {
+				System.out.print(p);
+			}
+			System.out.println("\nSeleccione la Seccion (ID):");
+			int id = lector.nextInt();
+			lector.nextLine();
+			Seccion s = c.buscarSeccion(id);
+			if(s == null){
+				System.out.println("\nSeccion no encontrado...");
+				System.out.println("Presione <ENTER> para continuar...");
+				lector.next();
+				return;
+			}
+			
+			System.out.println("\nIntroduzca los datos de la seccion");
+			System.out.print("\nAula: ");
+			Object aula =  Repositorio.valorDeLista(aulas,
+					"Seleccione el aula:\n", "nombre", lector);
+			s.setIdAula(Integer.parseInt((String)aula));
+			System.out.print("\nProfesor: ");
+			int prof = Integer.parseInt((String)Repositorio.valorDeLista(profesores,
+					"Seleccione el profesor:\n", "nombre", lector));
+			s.setIdProfesor(prof);
+			System.out.print("\nAsignatura: ");
+			int asig = Integer.parseInt((String)Repositorio.valorDeLista(asignaturas,
+					"Seleccione el asignatura:\n", "nombre", lector));
+			s.setIdAsignatura(asig);
+			System.out.print("\nIntroduzca la cantidad de encuentros por semana [1-7]:");
+			vecesXsemana = lector.nextInt();
+			for(int i = 0; i < vecesXsemana; i++){
+				dias += Repositorio.LeerDia(lector) + ",";
+				horas += Repositorio.LeerHora(lector, "inicio") ;
+				horas += "-" + Repositorio.LeerHora(lector, "fin")+ ","; 
+			}
+			dias = dias.substring(0, dias.length() - 1);
+			horas = horas.substring(0, horas.length() -1);
+			s.setHoras(horas);
+			s.setDias(dias);
+			System.out.println("\nSeccion activa? [S/N]");
+			s.setActiva(lector.next().equals("S") || lector.next().equals("s"));
+
+			boolean r = c.actualizarSeccion(s);
+			if(r){
+				System.out.println("\nSeccion eliminada correctamente.");
+			} else{
+				System.out.println("\nError al eliminar los datos. Intente luego.");
+			}
+			System.out.println("Presione <ENTER> para continuar...");
+			lector.next();
+			return;
+		} catch (Exception ex) {
+
+		}
 	}
 
 	public static void eliminarSeccion() {
-		
+		lector = new Scanner(System.in);
+		lector.useDelimiter("\r\n");
+		try {
+			List<Seccion> secciones = c.obtenerSecciones();
+			System.out.println("\nSecciones registradas:");
+			System.out
+					.println("ID\t| Horas\t| Dias\t| Profesor\t| Asignatura\t Aula\n");
+			for (Seccion p : secciones) {
+				System.out.print(p);
+			}
+			System.out.println("\nSeleccione la Seccion (ID):");
+			int id = lector.nextInt();
+			Seccion s = c.buscarSeccion(id);
+			if(s == null){
+				System.out.println("\nAula no encontrado...");
+				System.out.println("Presione <ENTER> para continuar...");
+				lector.next();
+				return;
+			}
+
+			boolean r = c.eliminarSeccion(s);
+			if(r){
+				System.out.println("\nSeccion eliminada correctamente.");
+			} else{
+				System.out.println("\nError al eliminar los datos. Intente luego.");
+			}
+			System.out.println("Presione <ENTER> para continuar...");
+			lector.next();
+			return;
+		} catch (Exception ex) {
+
+		}
 	}
 
 	public static void verSecciones() {
